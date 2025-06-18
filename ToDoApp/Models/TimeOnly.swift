@@ -11,3 +11,9 @@ struct TimeOnly{
     var hour: Int
     var minute: Int
 }
+
+extension TimeOnly{
+    func toString() -> String {
+        String(format: "%02d:%02d", hour, minute)
+    }
+}

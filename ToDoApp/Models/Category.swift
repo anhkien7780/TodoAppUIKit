@@ -7,8 +7,8 @@
 
 import Foundation
 
-enum Category{
-    case Task
-    case Event
-    case Goal
+enum Category: String, CaseIterable{
+    case Task = "task"
+    case Event = "event"
+    case Goal = "goal"
 }
