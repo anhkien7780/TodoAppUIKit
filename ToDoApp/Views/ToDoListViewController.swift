@@ -12,7 +12,15 @@ class ToDoListViewController: UIViewController {
     
     private var viewModel: ToDoListViewModel
     
-    private let uncompletedItemStack = UIStackView()
+    private let uncompletedItemStack: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.backgroundColor = UIColor(hex: "E5E9ED")
+        stack.spacing = 1
+        stack.layer.cornerRadius = 16
+        stack.clipsToBounds = true
+        return stack
+    }()
     
     init(){
         let sampleItems = [
@@ -58,15 +66,6 @@ class ToDoListViewController: UIViewController {
         
         let dateString = formatter.string(from: Date())
         let headerView = HeaderView(dateString: dateString)
-        
-
-        
-        uncompletedItemStack.axis = .vertical
-        uncompletedItemStack.backgroundColor = UIColor(hex: "E5E9ED")
-        uncompletedItemStack.spacing = 1
-        uncompletedItemStack.layer.cornerRadius = 16
-        uncompletedItemStack.clipsToBounds = true
-        
         
         [headerView, uncompletedItemStack].forEach{
             $0.translatesAutoresizingMaskIntoConstraints = false
