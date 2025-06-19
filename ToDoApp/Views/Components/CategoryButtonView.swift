@@ -11,7 +11,7 @@ import UIKit
 class CategoryButtonView: UIButton {
     
     private let iconView: RoundedIconView
-    private var category: Category
+    var category: Category
 
     init(category: Category) {
         self.category = category

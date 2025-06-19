@@ -9,7 +9,8 @@ import Foundation
 import UIKit
 
 class AddNewTaskViewController: UIViewController{
-    
+    private var selectedCategory: Category?
+
     let headerView = AddNewTaskHeaderView()
     let bodyStackView: UIStackView = {
         let stack = UIStackView()
@@ -23,12 +24,7 @@ class AddNewTaskViewController: UIViewController{
         placeholder: "Task Title",
         textFieldHeight: 56
     )
-    let categoryStackView: UIStackView = {
-        let stack = UIStackView()
-        stack.spacing = 24
-        stack.axis = .horizontal
-        return stack
-    }()
+    let categoryRowView = UIView()
     let categoryLabelView: UILabel = {
         let label = UILabel()
         label.text = "Category"
@@ -53,11 +49,16 @@ class AddNewTaskViewController: UIViewController{
             categoryButtonStackView.addArrangedSubview($0)
         }
         [categoryLabelView, categoryButtonStackView].forEach{
-            categoryStackView.addArrangedSubview($0)
+            categoryRowView.addSubview($0)
         }
-        [taskTextFiledView, categoryStackView].forEach{
+        [taskTextFiledView, categoryRowView].forEach{
             bodyStackView.addArrangedSubview($0)
         }
+        
+        taskButton.addTarget(self, action: #selector(handleCategorySelection(_:)), for: .touchUpInside)
+        evenButton.addTarget(self, action: #selector(handleCategorySelection(_:)), for: .touchUpInside)
+        goalButton.addTarget(self, action: #selector(handleCategorySelection(_:)), for: .touchUpInside)
+
         
         view.addSubview(headerView)
         view.addSubview(bodyStackView)
@@ -65,6 +66,15 @@ class AddNewTaskViewController: UIViewController{
             headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            
+            categoryLabelView.leadingAnchor.constraint(equalTo: categoryRowView.leadingAnchor),
+            categoryLabelView.centerYAnchor.constraint(equalTo: categoryRowView.centerYAnchor),
+            
+            categoryButtonStackView.leadingAnchor.constraint(equalTo: categoryLabelView.trailingAnchor, constant: 24),
+            categoryButtonStackView.centerYAnchor.constraint(equalTo: categoryRowView.centerYAnchor),
+            categoryButtonStackView.trailingAnchor.constraint(lessThanOrEqualTo: categoryRowView.trailingAnchor),
+            
+            categoryRowView.heightAnchor.constraint(equalToConstant: 56),
             
             bodyStackView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 24),
             bodyStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
@@ -79,7 +89,7 @@ class AddNewTaskViewController: UIViewController{
         [headerView,
          bodyStackView,
          taskTextFiledView,
-         categoryStackView,
+         categoryRowView,
          categoryLabelView,
          categoryButtonStackView,
          taskButton,
@@ -89,5 +99,12 @@ class AddNewTaskViewController: UIViewController{
         }
     }
     
+    @objc private func handleCategorySelection(_ sender: CategoryButtonView) {
+        [taskButton, evenButton, goalButton].forEach { $0.isSelected = false }
+
+        sender.isSelected = true
+        selectedCategory = sender.category
+    }
+
 }
 
