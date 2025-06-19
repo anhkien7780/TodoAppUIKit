@@ -85,6 +85,7 @@ class AddNewTaskViewController: UIViewController{
         evenButton.addTarget(self, action: #selector(handleCategorySelection(_:)), for: .touchUpInside)
         goalButton.addTarget(self, action: #selector(handleCategorySelection(_:)), for: .touchUpInside)
 
+        headerView.closeIconView.addTarget(self, action: #selector(closeTapped), for: .touchUpInside)
         
         view.addSubview(headerView)
         view.addSubview(bodyStackView)
@@ -142,6 +143,9 @@ class AddNewTaskViewController: UIViewController{
 
         sender.isSelected = true
         selectedCategory = sender.category
+    }
+    @objc func closeTapped() {
+        dismiss(animated: true, completion: nil)
     }
 
 }

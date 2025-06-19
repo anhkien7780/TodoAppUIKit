@@ -19,27 +19,22 @@ class AppCoordinator: Coordinator {
     }
     
     func start() {
-//        showToDoList()
-        // For test only
-        showAddNewTask()
+        showToDoList()
     }
     
     func showToDoList(){
         let todoListVC = ToDoListViewController()
+        todoListVC.coordinator = self
         navigationController.viewControllers = [todoListVC]
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
     }
     
-    // For test only
-    func showAddNewTask(){
+    func navigateToAddNewTask() {
         let addNewTaskVC = AddNewTaskViewController()
-        navigationController.viewControllers = [addNewTaskVC]
-        window?.rootViewController = navigationController
-        window?.makeKeyAndVisible()
+        addNewTaskVC.modalPresentationStyle = .pageSheet // hoặc .formSheet, .automatic, .overCurrentContext
+        addNewTaskVC.modalTransitionStyle = .coverVertical // từ dưới lên
+        navigationController.present(addNewTaskVC, animated: true, completion: nil)
     }
-    
-    
-    
     
 }

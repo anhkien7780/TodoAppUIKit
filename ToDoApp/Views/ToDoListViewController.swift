@@ -9,9 +9,14 @@ import Foundation
 import UIKit
 
 class ToDoListViewController: UIViewController {
-    
+    weak var coordinator: AppCoordinator?
     private var viewModel: ToDoListViewModel
-    
+    let formatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMMM dd yyyy"
+        dateFormatter.locale = Locale(identifier: "en_US")
+        return dateFormatter
+    }()
     private let uncompletedItemStack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
@@ -21,7 +26,6 @@ class ToDoListViewController: UIViewController {
         stack.clipsToBounds = true
         return stack
     }()
-    
     private var completedHeader: UILabel = {
         let label = UILabel()
         label.text = "Completed"
@@ -29,7 +33,6 @@ class ToDoListViewController: UIViewController {
         label.textColor = .black
         return label
     }()
-    
     private let completedItemStack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
@@ -39,7 +42,6 @@ class ToDoListViewController: UIViewController {
         stack.clipsToBounds = true
         return stack
     }()
-    
     private let addNewTodoItemButton: UIButton = {
         let button = UIButton()
         button.setTitle("Add New Task", for: .normal)
@@ -49,6 +51,18 @@ class ToDoListViewController: UIViewController {
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         return button
+    }()
+    private let scrollableList = UIScrollView()
+    private let headerView : ListTodoHeaderView = {
+        let formatter: DateFormatter = {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MMMM dd yyyy"
+            dateFormatter.locale = Locale(identifier: "en_US")
+            return dateFormatter
+        }()
+        let dateString = formatter.string(from: Date())
+        let view = ListTodoHeaderView(dateString: dateString)
+        return view
     }()
     
     init(){
@@ -110,15 +124,13 @@ class ToDoListViewController: UIViewController {
         super.viewDidLoad()
         reloadUI()
         view.backgroundColor = UIColor(hex: "#F1F5F9")
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MMMM dd yyyy"
-        formatter.locale = Locale(identifier: "en_US")
         
-        let dateString = formatter.string(from: Date())
-        let headerView = ListTodoHeaderView(dateString: dateString)
+        
+        
+        addNewTodoItemButton.addTarget(self, action: #selector(didTapAdd), for: .touchUpInside)
+        
         headerView.translatesAutoresizingMaskIntoConstraints = false
         
-        let scrollableList = UIScrollView()
         scrollableList.delegate = self
         scrollableList.translatesAutoresizingMaskIntoConstraints = false
         scrollableList.contentInset = UIEdgeInsets(top: 1, left: 0, bottom: 100, right: 0)
@@ -182,5 +194,9 @@ class ToDoListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
+    @objc private func didTapAdd(){
+        coordinator?.navigateToAddNewTask()
     }
 }
