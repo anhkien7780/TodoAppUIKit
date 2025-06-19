@@ -61,10 +61,11 @@ class TodoItemView: UIView {
         let image = UIImage(named: iconImageNamed)
         iconView = RoundedIconView(image: image, backgroundColor: iconBackgroundColor)
         iconView.translatesAutoresizingMaskIntoConstraints = false
-
+        
         titleView.text = title
         titleView.font = UIFont.boldSystemFont(ofSize: 16)
         titleView.numberOfLines = 1
+        
 
         checkboxView.isChecked = isChecked
         checkboxView.onCheckChange = onCheckChange
@@ -74,18 +75,56 @@ class TodoItemView: UIView {
         verticalStack.spacing = 1
         verticalStack.translatesAutoresizingMaskIntoConstraints = false
         verticalStack.addArrangedSubview(titleView)
+        
 
         if let time = time {
             let timeLabel = UILabel()
             timeLabel.text = time
             timeLabel.font = UIFont.systemFont(ofSize: 12)
             timeLabel.textColor = .gray
+            if isChecked{
+                timeLabel.attributedText = strikeThrounghTextFormat(text: time)
+                timeLabel.alpha = 0.3
+            }
             verticalStack.addArrangedSubview(timeLabel)
         }
+        
+        let blurredContainerView = UIView()
+        blurredContainerView.translatesAutoresizingMaskIntoConstraints = false
+        blurredContainerView.backgroundColor = .clear
+        blurredContainerView.clipsToBounds = true
 
+        if isChecked {
+            let blurEffect = UIBlurEffect(style: .light)
+            let blurView = UIVisualEffectView(effect: blurEffect)
+            blurView.translatesAutoresizingMaskIntoConstraints = false
+            blurredContainerView.addSubview(blurView)
+            
+            NSLayoutConstraint.activate([
+                blurView.topAnchor.constraint(equalTo: blurredContainerView.topAnchor),
+                blurView.leadingAnchor.constraint(equalTo: blurredContainerView.leadingAnchor),
+                blurView.trailingAnchor.constraint(equalTo: blurredContainerView.trailingAnchor),
+                blurView.bottomAnchor.constraint(equalTo: blurredContainerView.bottomAnchor)
+            ])
+            
+            titleView.attributedText = strikeThrounghTextFormat(text: title)
+            titleView.alpha = 0.3
+            iconView.alpha = 0.3
+        }
+
+        blurredContainerView.addSubview(verticalStack)
+
+        NSLayoutConstraint.activate([
+            verticalStack.topAnchor.constraint(equalTo: blurredContainerView.topAnchor),
+            verticalStack.leadingAnchor.constraint(equalTo: blurredContainerView.leadingAnchor),
+            verticalStack.trailingAnchor.constraint(equalTo: blurredContainerView.trailingAnchor),
+            verticalStack.bottomAnchor.constraint(equalTo: blurredContainerView.bottomAnchor)
+        ])
+        
+        
         containerView.translatesAutoresizingMaskIntoConstraints = false
         containerView.addSubview(iconView)
-        containerView.addSubview(verticalStack)
+        containerView.addSubview(blurredContainerView)
         containerView.addSubview(checkboxView)
 
         addSubview(containerView)
@@ -95,6 +134,17 @@ class TodoItemView: UIView {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func strikeThrounghTextFormat(text: String) -> NSAttributedString{
+        let attributedText = NSAttributedString(
+            string: text,
+            attributes: [
+                .strikethroughStyle: NSUnderlineStyle.single.rawValue,
+                .foregroundColor: UIColor.gray
+            ]
+        )
+        return attributedText
     }
 
     private func setupLayout() {
