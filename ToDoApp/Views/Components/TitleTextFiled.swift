@@ -69,8 +69,7 @@ class CustomTextFieldView: UIView {
     }
     
     func setSuffixIcon(_ image: UIImage) {
-        suffixIconView.image = image.withRenderingMode(.alwaysTemplate)
-        suffixIconView.tintColor = .gray
+        suffixIconView.image = image
         suffixIconView.contentMode = .scaleAspectFit
 
         let container = UIView(frame: CGRect(x: 0, y: 0, width: 36, height: 36))
