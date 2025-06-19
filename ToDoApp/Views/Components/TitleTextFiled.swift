@@ -70,7 +70,20 @@ class CustomTextFieldView: UIView {
     
     func setSuffixIcon(_ image: UIImage) {
         suffixIconView.image = image.withRenderingMode(.alwaysTemplate)
-        textField.rightView = suffixIconView
+        suffixIconView.tintColor = .gray
+        suffixIconView.contentMode = .scaleAspectFit
+
+        let container = UIView(frame: CGRect(x: 0, y: 0, width: 36, height: 36))
+
+        // Đặt frame icon (căn giữa trong container)
+        let iconSize: CGFloat = 20
+        let padding: CGFloat = (36 - iconSize) / 2
+        suffixIconView.frame = CGRect(x: padding, y: padding, width: iconSize, height: iconSize)
+
+        container.addSubview(suffixIconView)
+
+        textField.rightView = container
+        textField.rightViewMode = .always
     }
     
     func setTextFieldHeight(height: CGFloat){

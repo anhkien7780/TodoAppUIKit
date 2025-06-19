@@ -40,6 +40,16 @@ class AddNewTaskViewController: UIViewController{
     let taskButton = CategoryButtonView(category: .Task)
     let evenButton = CategoryButtonView(category: .Event)
     let goalButton = CategoryButtonView(category: .Goal)
+    let dateTimeStackView: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.distribution = .fillEqually
+        stack.spacing = 8
+        return stack
+    }()
+    let dateTextFieldView = CustomTextFieldView(labelText: "Date", placeholder: "Date", suffixIcon: UIImage(named: "calendar"))
+    let timeTextFieldView = CustomTextFieldView(labelText: "Time", placeholder: "Time", suffixIcon: UIImage(named: "clock"))
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(hex: "#F1F5F9")
@@ -51,9 +61,15 @@ class AddNewTaskViewController: UIViewController{
         [categoryLabelView, categoryButtonStackView].forEach{
             categoryRowView.addSubview($0)
         }
-        [taskTextFiledView, categoryRowView].forEach{
+        [dateTextFieldView, timeTextFieldView].forEach{
+            $0.setTextFieldHeight(height: 55)
+            dateTimeStackView.addArrangedSubview($0)
+        }
+        [taskTextFiledView, categoryRowView, dateTimeStackView].forEach{
             bodyStackView.addArrangedSubview($0)
         }
+        
+        
         
         taskButton.addTarget(self, action: #selector(handleCategorySelection(_:)), for: .touchUpInside)
         evenButton.addTarget(self, action: #selector(handleCategorySelection(_:)), for: .touchUpInside)
@@ -94,7 +110,11 @@ class AddNewTaskViewController: UIViewController{
          categoryButtonStackView,
          taskButton,
          evenButton,
-         goalButton].forEach{
+         goalButton,
+         dateTimeStackView,
+         dateTextFieldView,
+         timeTextFieldView,
+        ].forEach{
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
     }
