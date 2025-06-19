@@ -55,6 +55,9 @@ class TodoItemView: UIView {
         case .Goal:
             iconBackgroundColor = UIColor(hex: "#FEF5D3")
             iconImageNamed = category.rawValue
+        case .None:
+            iconImageNamed = ""
+            iconBackgroundColor = .white
         }
 
 

@@ -11,4 +11,5 @@ enum Category: String, CaseIterable{
     case Task = "task"
     case Event = "event"
     case Goal = "goal"
+    case None
 }

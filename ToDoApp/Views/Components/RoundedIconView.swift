@@ -20,9 +20,14 @@ class RoundedIconView: UIView {
         super.init(frame: .zero)
         setupView(image: image, backgroundColor: backgroundColor)
     }
+    
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setBackgroundColor(_ color: UIColor){
+        containerView.backgroundColor = color
     }
 
     private func setupView(image: UIImage?, backgroundColor: UIColor) {
