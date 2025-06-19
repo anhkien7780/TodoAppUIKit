@@ -121,7 +121,7 @@ class ToDoListViewController: UIViewController {
         let scrollableList = UIScrollView()
         scrollableList.delegate = self
         scrollableList.translatesAutoresizingMaskIntoConstraints = false
-        scrollableList.contentInset.top = 1
+        scrollableList.contentInset = UIEdgeInsets(top: 1, left: 0, bottom: 100, right: 0)
         
         let contentView = UIView()
         contentView.translatesAutoresizingMaskIntoConstraints = false
