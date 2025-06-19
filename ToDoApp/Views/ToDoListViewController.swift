@@ -101,6 +101,7 @@ class ToDoListViewController: UIViewController {
         }
     }
     
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -118,13 +119,15 @@ class ToDoListViewController: UIViewController {
         headerView.translatesAutoresizingMaskIntoConstraints = false
         
         let scrollableList = UIScrollView()
+        scrollableList.delegate = self
         scrollableList.translatesAutoresizingMaskIntoConstraints = false
+        scrollableList.contentInset.top = 1
         
         let contentView = UIView()
         contentView.translatesAutoresizingMaskIntoConstraints = false
         scrollableList.addSubview(contentView)
-        
         contentView.addSubview(headerView)
+        
         
         [uncompletedItemStack, completedHeader, completedItemStack].forEach{
             $0.translatesAutoresizingMaskIntoConstraints = false
