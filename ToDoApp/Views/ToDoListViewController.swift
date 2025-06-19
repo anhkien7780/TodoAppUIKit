@@ -115,7 +115,7 @@ class ToDoListViewController: UIViewController {
         formatter.locale = Locale(identifier: "en_US")
         
         let dateString = formatter.string(from: Date())
-        let headerView = HeaderView(dateString: dateString)
+        let headerView = ListTodoHeaderView(dateString: dateString)
         headerView.translatesAutoresizingMaskIntoConstraints = false
         
         let scrollableList = UIScrollView()

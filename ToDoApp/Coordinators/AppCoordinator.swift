@@ -19,12 +19,22 @@ class AppCoordinator: Coordinator {
     }
     
     func start() {
-        showToDoList()
+//        showToDoList()
+        // For test only
+        showAddNewTask()
     }
     
     func showToDoList(){
         let todoListVC = ToDoListViewController()
         navigationController.viewControllers = [todoListVC]
+        window?.rootViewController = navigationController
+        window?.makeKeyAndVisible()
+    }
+    
+    // For test only
+    func showAddNewTask(){
+        let addNewTaskVC = AddNewTaskViewController()
+        navigationController.viewControllers = [addNewTaskVC]
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
     }

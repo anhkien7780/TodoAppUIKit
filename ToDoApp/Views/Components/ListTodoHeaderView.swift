@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class HeaderView: UIView {
+class ListTodoHeaderView: UIView {
     let topNav: UILabel = {
         let label = UILabel()
         label.text = ""
