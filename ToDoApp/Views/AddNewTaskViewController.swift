@@ -49,7 +49,18 @@ class AddNewTaskViewController: UIViewController{
     }()
     let dateTextFieldView = CustomTextFieldView(labelText: "Date", placeholder: "Date", suffixIcon: UIImage(named: "calendar"))
     let timeTextFieldView = CustomTextFieldView(labelText: "Time", placeholder: "Time", suffixIcon: UIImage(named: "clock"))
-    
+    let noteTextView = CustomTextViewView(labelText: "Notes", placeholder: "Notes")
+    let saveButtonView: UIButton = {
+        let button = UIButton()
+        button.setTitle("Save", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        button.heightAnchor.constraint(equalToConstant: 56).isActive = true
+        button.backgroundColor = UIColor(hex: "#4A3780")
+        button.layer.cornerRadius = 28
+        button.clipsToBounds = true
+        return button
+    }()
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(hex: "#F1F5F9")
@@ -65,10 +76,9 @@ class AddNewTaskViewController: UIViewController{
             $0.setTextFieldHeight(height: 55)
             dateTimeStackView.addArrangedSubview($0)
         }
-        [taskTextFiledView, categoryRowView, dateTimeStackView].forEach{
+        [taskTextFiledView, categoryRowView, dateTimeStackView, noteTextView].forEach{
             bodyStackView.addArrangedSubview($0)
         }
-        
         
         
         taskButton.addTarget(self, action: #selector(handleCategorySelection(_:)), for: .touchUpInside)
@@ -78,6 +88,7 @@ class AddNewTaskViewController: UIViewController{
         
         view.addSubview(headerView)
         view.addSubview(bodyStackView)
+        view.addSubview(saveButtonView)
         NSLayoutConstraint.activate([
             headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -94,7 +105,12 @@ class AddNewTaskViewController: UIViewController{
             
             bodyStackView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 24),
             bodyStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            bodyStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
+            bodyStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            
+            saveButtonView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24),
+            saveButtonView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            saveButtonView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
+            
         ])
         
     }
@@ -114,6 +130,8 @@ class AddNewTaskViewController: UIViewController{
          dateTimeStackView,
          dateTextFieldView,
          timeTextFieldView,
+         noteTextView,
+         saveButtonView,
         ].forEach{
             $0.translatesAutoresizingMaskIntoConstraints = false
         }

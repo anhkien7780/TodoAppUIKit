@@ -81,7 +81,6 @@ class CustomTextFieldView: UIView {
         suffixIconView.frame = CGRect(x: padding, y: padding, width: iconSize, height: iconSize)
 
         container.addSubview(suffixIconView)
-
         textField.rightView = container
         textField.rightViewMode = .always
     }
