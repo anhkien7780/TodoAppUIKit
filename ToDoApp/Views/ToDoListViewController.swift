@@ -82,15 +82,21 @@ class ToDoListViewController: UIViewController {
         completedItemStack.arrangedSubviews.forEach {
             $0.removeFromSuperview()
         }
-        
-        for item in viewModel.unCompletedItemList() {
-            let todoItemView = TodoItemView(item: item){
-                [weak self] isCompleted in
-                self?.viewModel.toggleCompletion(for: item)
+        let uncompletedItems = viewModel.uncompletedItems
+        if uncompletedItems.isEmpty {
+            let spacer = UIView()
+            spacer.backgroundColor = UIColor(hex: "#4A3780")
+            spacer.heightAnchor.constraint(equalToConstant: 56).isActive = true
+            uncompletedItemStack.addArrangedSubview(spacer)
+        } else {
+            for item in viewModel.unCompletedItemList() {
+                let todoItemView = TodoItemView(item: item){
+                    [weak self] isCompleted in
+                    self?.viewModel.toggleCompletion(for: item)
+                }
+                uncompletedItemStack.addArrangedSubview(todoItemView)
             }
-            uncompletedItemStack.addArrangedSubview(todoItemView)
         }
-        
         for item in viewModel.completedItemList() {
             let todoItemView = TodoItemView(item: item){
                 [weak self] isUncompleted in

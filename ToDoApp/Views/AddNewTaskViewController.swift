@@ -167,13 +167,19 @@ class AddNewTaskViewController: UIViewController{
             isCompleted: false,
             note: noteTextView.textView.text
         )
-        saveTask(newItem: newItem)
+        if(isValidInput(taskTextFiledView.textField.text)){
+            saveTask(newItem: newItem)
+        }
+        
     }
     
     func saveTask(newItem: TodoItemDetail) {
         viewModel.addNewUncompletedItem(newItem)
         dismiss(animated: true)
     }
-    
+    func isValidInput(_ text: String?) -> Bool {
+            guard let text = text else { return false }
+            return !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        }
 }
 
