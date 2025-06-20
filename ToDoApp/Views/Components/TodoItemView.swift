@@ -25,7 +25,7 @@ class TodoItemView: UIView {
         configure(
             title: item.taskTitle,
             category: item.category ?? .Task,
-            time: item.time?.toString(),
+            time: item.time,
             isChecked: item.isCompleted,
             onCheckChange: onCheckChange
         )

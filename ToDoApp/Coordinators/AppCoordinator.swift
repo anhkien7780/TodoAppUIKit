@@ -12,6 +12,7 @@ class AppCoordinator: Coordinator {
     var window: UIWindow?
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator] = []
+    var todoListViewModel = ToDoListViewModel(items: [])
     
     init(window: UIWindow?) {
         self.navigationController = UINavigationController()
@@ -23,7 +24,7 @@ class AppCoordinator: Coordinator {
     }
     
     func showToDoList(){
-        let todoListVC = ToDoListViewController()
+        let todoListVC = ToDoListViewController(viewModel: todoListViewModel)
         todoListVC.coordinator = self
         navigationController.viewControllers = [todoListVC]
         window?.rootViewController = navigationController
@@ -31,7 +32,7 @@ class AppCoordinator: Coordinator {
     }
     
     func navigateToAddNewTask() {
-        let addNewTaskVC = AddNewTaskViewController()
+        let addNewTaskVC = AddNewTaskViewController(viewModel: todoListViewModel)
         addNewTaskVC.modalPresentationStyle = .pageSheet // hoặc .formSheet, .automatic, .overCurrentContext
         addNewTaskVC.modalTransitionStyle = .coverVertical // từ dưới lên
         navigationController.present(addNewTaskVC, animated: true, completion: nil)

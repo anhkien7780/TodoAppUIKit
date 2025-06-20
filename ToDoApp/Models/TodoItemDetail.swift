@@ -11,6 +11,8 @@ struct TodoItemDetail {
     var id: UUID = UUID()
     var taskTitle: String
     var category: Category?
-    var time: TimeOnly?
+    var date: String?
+    var time: String?
     var isCompleted: Bool
+    var note: String?
 }

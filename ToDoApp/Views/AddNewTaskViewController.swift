@@ -9,7 +9,17 @@ import Foundation
 import UIKit
 
 class AddNewTaskViewController: UIViewController{
+    let viewModel: ToDoListViewModel
     private var selectedCategory: Category?
+    
+    init(viewModel: ToDoListViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     let headerView = AddNewTaskHeaderView()
     let bodyStackView: UIStackView = {
@@ -84,8 +94,8 @@ class AddNewTaskViewController: UIViewController{
         taskButton.addTarget(self, action: #selector(handleCategorySelection(_:)), for: .touchUpInside)
         evenButton.addTarget(self, action: #selector(handleCategorySelection(_:)), for: .touchUpInside)
         goalButton.addTarget(self, action: #selector(handleCategorySelection(_:)), for: .touchUpInside)
-
         headerView.closeIconView.addTarget(self, action: #selector(closeTapped), for: .touchUpInside)
+        saveButtonView.addTarget(self, action: #selector(saveTapped), for: .touchUpInside)
         
         view.addSubview(headerView)
         view.addSubview(bodyStackView)
@@ -147,6 +157,23 @@ class AddNewTaskViewController: UIViewController{
     @objc func closeTapped() {
         dismiss(animated: true, completion: nil)
     }
-
+    
+    @objc func saveTapped(){
+        let newItem = TodoItemDetail(
+            taskTitle: taskTextFiledView.textField.text ?? "",
+            category: selectedCategory,
+            date: dateTextFieldView.textField.text,
+            time: timeTextFieldView.textField.text,
+            isCompleted: false,
+            note: noteTextView.textView.text
+        )
+        saveTask(newItem: newItem)
+    }
+    
+    func saveTask(newItem: TodoItemDetail) {
+        viewModel.addNewUncompletedItem(newItem)
+        dismiss(animated: true)
+    }
+    
 }
 

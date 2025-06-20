@@ -65,23 +65,8 @@ class ToDoListViewController: UIViewController {
         return view
     }()
     
-    init(){
-        let sampleItems = [
-            TodoItemDetail(taskTitle: "Study lesson", category: .Task, isCompleted: false),
-            TodoItemDetail(taskTitle: "Run 5k", category: .Goal, time: TimeOnly(hour: 4, minute: 0), isCompleted: false),
-            TodoItemDetail(taskTitle: "Go to party", category: .Event, time: TimeOnly(hour: 10, minute: 0), isCompleted: false),
-            TodoItemDetail(taskTitle: "Game meetup", category: .Event, time: TimeOnly(hour: 1, minute: 0), isCompleted: true),
-            TodoItemDetail(taskTitle: "Go to party", category: .Task, isCompleted: true),
-            TodoItemDetail(taskTitle: "Go to party", category: .Task, isCompleted: true),
-            TodoItemDetail(taskTitle: "Go to party", category: .Task, isCompleted: true),
-            TodoItemDetail(taskTitle: "Go to party", category: .Task, isCompleted: true),
-            TodoItemDetail(taskTitle: "Go to party", category: .Task, isCompleted: true),
-            TodoItemDetail(taskTitle: "Go to party", category: .Task, isCompleted: true),
-            TodoItemDetail(taskTitle: "Go to party", category: .Task, isCompleted: true),
-            TodoItemDetail(taskTitle: "Go to party", category: .Task, isCompleted: true),
-            TodoItemDetail(taskTitle: "Go to party", category: .Task, isCompleted: true),
-        ]
-        self.viewModel = ToDoListViewModel(items: sampleItems)
+    init(viewModel: ToDoListViewModel){
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.viewModel.onDataChanged = {
             [weak self] in

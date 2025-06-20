@@ -41,4 +41,10 @@ class ToDoListViewModel{
     func completedItemList() -> [TodoItemDetail] {
         return completedItems
     }
+    
+    func addNewUncompletedItem(_ item: TodoItemDetail) {
+        guard !item.isCompleted else { return }
+        uncompletedItems.append(item)
+        onDataChanged?()
+    }
 }
